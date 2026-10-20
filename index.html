@@ -132,7 +132,8 @@ function post(){
  var nm=["pn","wt","śr","cz","pt","sb","nd"];h+='<h3>Ostatnie 7 dni</h3><div class="card"><div class="week">';
  for(var i=6;i>=0;i--){var d=ago(i),p=pts(key(d));h+='<div class="day">'+nm[(d.getDay()+6)%7]+'<div class="dot '+(p>=8?"f":p>0?"p":"")+'">'+p+'</div></div>'}
  h+='</div></div><h3>Tygodnie miesiąca</h3><div class="card">';
- for(var w=0;w*7<D.length;w++){var s=0;D.slice(w*7,w*7+7).forEach(function(k){s+=pts(k)});h+='<div class="row"><div class="nm">Tydzień '+(w+1)+'</div><b>'+s+' pkt</b></div>'}
+ var n2=new Date(),A2=[],last=new Date(n2.getFullYear(),n2.getMonth()+1,0).getDate();for(var q=1;q<=last;q++)A2.push(key(new Date(n2.getFullYear(),n2.getMonth(),q)));
+ for(var w=0;w<4;w++){var s=0,from=w*7,to=w===3?last:from+7;A2.slice(from,to).forEach(function(k){s+=pts(k)});h+='<div class="row"><div class="nm">Tydzień '+(w+1)+'<small>dni '+(from+1)+'–'+to+'</small></div><b>'+s+' pkt</b></div>'}
  h+='</div><div class="foot"><button data-a="reset">Wyczyść postępy</button></div>';
  return h;
 }
