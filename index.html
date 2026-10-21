@@ -53,6 +53,7 @@ button.sec{padding:9px 12px;border-radius:10px;border:1px solid var(--bd);backgr
 .st{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center}.st b{display:block;font-size:20px}.st span{font-size:12px;color:var(--mut)}
 .ck{width:30px;height:30px;border-radius:50%;border:2px solid var(--bd);background:transparent;color:#fff;cursor:pointer;flex:none}.ck.on{background:var(--ac);border-color:var(--ac)}
 .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.nav b{font-size:16px}.nav button:disabled{opacity:.35;cursor:default}
+.ed{border-top:1px solid var(--bd);padding:10px 0;display:grid;gap:6px}input,textarea,select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit;font-size:14px}textarea{min-height:110px;resize:vertical}.btns select{width:auto}summary{cursor:pointer}
 .note{font-size:12px;color:var(--mut)}.foot{text-align:center;margin-top:10px}.foot button{background:none;border:0;color:var(--mut);text-decoration:underline;font-size:12px;cursor:pointer}
 </style>
 </head>
@@ -67,7 +68,7 @@ button.sec{padding:9px 12px;border-radius:10px;border:1px solid var(--bd);backgr
 var KEY="nawyki-v2";
 var CATS={z:["Zdrowie","💪"],m:["Umysł","🧠"],r:["Relacje","🤝"],d:["Duch","🕊️"]};
 var LV=["—","Mini","Plus","Elita"];
-var H=[
+var DEF=[
 ["w1","z","Szklanka wody rano / białko","rano"],["w2","z","Ćwiczenia fizyczne (ruch)","okno treningowe"],["w3","z","Spacer (kroki)","w ciągu dnia"],
 ["w4","z","Prysznic zimny / kontrastowy","rano"],["w5","z","Reset wzroku (patrzenie w dal)","co 45 min w pracy"],["w6","z","Zielona herbata","przedpołudnie"],
 ["w7","z","Owoc i warzywo","do posiłków"],["w8","z","Wypicie 2 litrów wody","do 16:00"],["w9","z","Różne sposoby siedzenia",""],["w10","z","Leżenie na podłodze 5 min","po ćwiczeniach"],
@@ -94,10 +95,16 @@ var RY=[["06:00","Wypij 1–2 szklanki wody przed kawą i telefonem","Rozcieńcz
 ["15:00–17:00","Okno treningowe: ruch / nauka / uważność","Najniższe ryzyko kontuzji"],["16:00","Zakończ picie większości płynów (ok. 70% dziennej wody)","Głębszy sen"],
 ["do 19:00","Lekka kolacja o stałej porze","Odciąża układ pokarmowy"],["20:30","Ekrany off na 90 minut przed snem","Więcej melatoniny"],
 ["przed snem","Nitkowanie zębów, płukanie gardła 30 s, nucenie 60 s","Wycisza układ nerwowy"]];
-var QU=["Małe kroki robione codziennie wygrywają z wielkimi zrywami.","Mini też się liczy. Ważne, żeby nie było zera.","Konsekwencja jest cichszą, ale silniejszą wersją motywacji.","Zacznij od poziomu Mini, a Plus i Elita przyjdą same.","Jeden dzień to niewiele. Setka takich dni zmienia życie."];
+var QN=["Mniejsze kroki, większa ciągłość.","Jutrzejsze rezultaty to dzisiejsze nawyki.","Nie musisz być doskonały – wystarczy, że będziesz konsekwentny.","Sukces to suma małych wysiłków powtarzanych dzień po dniu.","Dyscyplina to po prostu wybór między tym, czego chcesz teraz, a tym, czego chcesz najbardziej.","Nie wygrywasz celu – wygrywasz systemem, który codziennie realizujesz.","Każda wykonana powtórka to głos oddany na osobę, którą chcesz się stać.",
+"Twoja jedyna prawdziwa konkurencja to osoba, którą byłeś wczoraj.","Autentyczna siła rośnie wtedy, gdy przestajesz szukać potwierdzenia na zewnątrz.","Twoje przekonania tworzą Twoją rzeczywistość – wybieraj je uważnie.","Świadomość to pierwszy krok do zmiany; odwaga to krok drugi.","Zadbaj o swój umysł tak, jak dbasz o swój dom.","Siła nie wynika z tego, co potrafisz zrobić, ale z pokonywania rzeczy, które kiedyś wydawały się niemożliwe.",
+"Kto chce, szuka sposobu. Kto nie chce, szuka powodu. — Sokrates","Podróż licząca tysiąc mil zaczyna się od pierwszego kroku. — Lao Tzu","Nie musisz być świetny, żeby zacząć, ale musisz zacząć, żeby być świetnym. — Les Brown","To, co robisz codziennie, ma większe znaczenie niż to, co robisz od czasu do czasu. — Gretchen Rubin","Dyscyplina jest mostem między celami a ich osiągnięciem. — Jim Rohn","Najlepszym momentem na posadzenie drzewa było 20 lat temu. Drugim najlepszym momentem jest teraz. — Przysłowie chińskie",
+"Skup się na procesie, nie na wyniku.","Dziś robię to, czego innym się nie chce, by jutro żyć tak, jak inni nie mogą.","Elastyczność w działaniu, stałość w dążeniu do celu.","Zadbaj o ciało, umysł i ducha.","Każdy dzień to nowa czysta karta.","Cierpliwość to też siła."];
+var QD=["Trzymaj się liny Mini! 🌱","Nigdy nie dopuszczaj do dwóch dni „Brak” pod rząd.","Mini to Twoja lina ratunkowa: poniżej 2 minut, a chroni wypracowane połączenia.","Plus to złoty środek, który buduje stabilne przyzwyczajenie.","Elita to pełne zaangażowanie w dni pełne energii.","Elastyczny nawyk eliminuje paraliż decyzyjny.","Sztywne plany zawodzą z braku elastyczności.","Mini jest śmiesznie łatwe, a utrzymuje ścieżki neuronowe."];
 var S={l:{},ro:{},dra:{}};
 try{var r=localStorage.getItem(KEY);if(r){var p=JSON.parse(r);if(p&&p.l)S=p;}}catch(e){}
 function sv(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+S.n=S.n||{};if(!S.h||!S.h.length)S.h=DEF.map(function(x){return x.concat(["","",""])});if(!S.q)S.q=QD.slice();if((S.qv||0)<2){QN.forEach(function(x){if(S.q.indexOf(x)<0)S.q.push(x)});S.qv=2}
+var H=S.h;
 function pad(n){return n<10?"0"+n:""+n}
 function key(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
 function ago(n){var d=new Date();d.setDate(d.getDate()-n);return d}
@@ -107,18 +114,33 @@ function pts(k){var m=cats(k);return m.z+m.m+m.r+m.d}
 function stat(p){return p>=8?"Mistrzostwo! 🏆":p>=4?"Super! ⭐":p>=1?"Dobry dzień! 👍":"Do dzieła! 🌱"}
 function mdays(){var n=new Date(),a=[];for(var d=1;d<=n.getDate();d++)a.push(key(new Date(n.getFullYear(),n.getMonth(),d)));return a}
 function streak(){var n=pts(key(ago(0)))>0?0:1,c=0;while(pts(key(ago(n)))>0&&c<400){c++;n++}return c}
-var tab="dzis",P=null,timer=null,off=0;
-var TABS=[["dzis","Dziś"],["roz","Rozruch"],["ryt","Rytm dnia"],["post","Postęp"]];
+var tab="dzis",P=null,timer=null,off=0,ed=false;
+var TABS=[["dzis","Dziś"],["roz","Rozruch"],["ryt","Rytm dnia"],["pam","Pamiętnik"],["post","Postęp"]];
 
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function qf(q){var i=q.lastIndexOf(" — ");return i>0?"„"+esc(q.slice(0,i))+"” — "+esc(q.slice(i+3)):"„"+esc(q)+"”"}
+function qt(){var a=S.q.length?S.q:QD;return a[Math.floor(Date.now()/864e5)%a.length]}
+function cardV(i,l){var x='<div class="card"><h3 style="margin-top:0">'+CATS[i][1]+' '+CATS[i][0]+'</h3>';
+ H.forEach(function(y){if(y[1]!==i)return;var v=l[y[0]]||0,g=[y[3],y[4]&&"Mini: "+y[4],y[5]&&"Plus: "+y[5],y[6]&&"Elita: "+y[6]].filter(Boolean).join(" · ");x+='<div class="row"><div class="nm">'+esc(y[2])+(g?'<small>'+esc(g)+'</small>':'')+'</div><button class="lv l'+v+'" data-a="lv" data-id="'+y[0]+'">'+LV[v]+'</button></div>'});return x+'</div>'}
+function inp(id,f,v,ph){return '<input data-f="'+f+'" data-id="'+id+'" value="'+esc(v)+'" placeholder="'+ph+'">'}
+function cardEd(i){var x='<div class="card"><h3 style="margin-top:0">'+CATS[i][1]+' '+CATS[i][0]+'</h3>';
+ H.forEach(function(y){if(y[1]!==i)return;var id=y[0];x+='<div class="ed">'+inp(id,"2",y[2],"Nazwa nawyku")+inp(id,"3",y[3],"Pora (opcjonalnie)")+inp(id,"4",y[4],"Twój próg Mini")+inp(id,"5",y[5],"Twój próg Plus")+inp(id,"6",y[6],"Twój próg Elita")+'<div class="btns"><button class="sec" data-a="up" data-id="'+id+'">↑</button><button class="sec" data-a="dn" data-id="'+id+'">↓</button><select data-f="1" data-id="'+id+'">'+Object.keys(CATS).map(function(c){return '<option value="'+c+'"'+(c===i?" selected":"")+'>'+CATS[c][0]+'</option>'}).join("")+'</select><button class="sec" data-a="rm" data-id="'+id+'">🗑</button></div></div>'});
+ return x+'<button class="pri" data-a="add" data-id="'+i+'">+ Dodaj nawyk</button></div>'}
+function quotesEd(){return '<div class="card"><h3 style="margin-top:0">💬 Moje hasła motywacyjne</h3><textarea data-f="q" placeholder="Jedno hasło w linii">'+esc(S.q.join("\n"))+'</textarea><div class="note">Jedno hasło w każdej linii. Każdego dnia aplikacja pokazuje jedno z nich. Gotowe hasła pochodzą z Twojego organizera nawyków.</div></div>'}
+function noteCard(k){return '<div class="card"><h3 style="margin-top:0">📔 Notatka dnia</h3><textarea data-f="n" data-k="'+k+'" placeholder="Co dziś się udało? Za co jestem wdzięczny? Czego się nauczyłem?">'+esc(S.n[k]||"")+'</textarea></div>'}
+function offOf(k){var q=k.split("-"),d=new Date(+q[0],+q[1]-1,+q[2]),t=new Date();t.setHours(0,0,0,0);return Math.round((t-d)/864e5)}
+function pam(){var ks=Object.keys(S.n).sort().reverse();if(!ks.length)return '<div class="card">Pamiętnik jest pusty. Napisz pierwszą notatkę w zakładce Dziś.</div>';
+ return ks.map(function(k){var q=k.split("-"),d=new Date(+q[0],+q[1]-1,+q[2]);return '<div class="card"><b>'+d.toLocaleDateString("pl-PL",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+'</b><p style="white-space:pre-wrap;margin:6px 0">'+esc(S.n[k].slice(0,300))+(S.n[k].length>300?"…":"")+'</p><button class="sec" data-a="goday" data-id="'+offOf(k)+'">Otwórz i edytuj</button></div>'}).join("")}
 function setLv(id){var k=key(ago(off));S.l[k]=S.l[k]||{};S.l[k][id]=((S.l[k][id]||0)+1)%4;sv();render()}
 function dzis(){
  var k=key(ago(off)),l=S.l[k]||{},c=cats(k),p=pts(k),h="";
  var lab=off===0?"Dziś":off===1?"Wczoraj":ago(off).toLocaleDateString("pl-PL",{weekday:"short",day:"numeric",month:"short"});
  h+='<div class="nav"><button class="sec" data-a="pd"'+(off>=60?" disabled":"")+'>‹</button><b>'+lab+'</b><button class="sec" data-a="nd"'+(off===0?" disabled":"")+'>›</button></div>';
- h+='<div class="card hero"><div class="ring"><svg width="88" height="88" viewBox="0 0 88 88"><circle cx="44" cy="44" r="37" fill="none" stroke="var(--ac2)" stroke-width="9"/><circle cx="44" cy="44" r="37" fill="none" stroke="var(--ac)" stroke-width="9" stroke-linecap="round" stroke-dasharray="232.5" stroke-dashoffset="'+(232.5*(1-p/12))+'"/></svg><b>'+p+'/12</b></div><div><div class="msg">'+stat(p)+'</div><div class="q">„'+QU[Math.floor(Date.now()/864e5)%QU.length]+'”</div></div></div>';
+ h+='<div class="card hero"><div class="ring"><svg width="88" height="88" viewBox="0 0 88 88"><circle cx="44" cy="44" r="37" fill="none" stroke="var(--ac2)" stroke-width="9"/><circle cx="44" cy="44" r="37" fill="none" stroke="var(--ac)" stroke-width="9" stroke-linecap="round" stroke-dasharray="232.5" stroke-dashoffset="'+(232.5*(1-p/12))+'"/></svg><b>'+p+'/12</b></div><div><div class="msg">'+stat(p)+'</div><div class="q">'+qf(qt())+'</div></div></div>';
  h+='<div class="chips">';for(var i in CATS)h+='<div class="chip">'+CATS[i][1]+'<b>'+LV[c[i]]+'</b>'+CATS[i][0]+'</div>';h+='</div>';
- for(var i in CATS){h+='<div class="card"><h3 style="margin-top:0">'+CATS[i][1]+' '+CATS[i][0]+'</h3>';
-  H.forEach(function(x){if(x[1]!==i)return;var v=l[x[0]]||0;h+='<div class="row"><div class="nm">'+x[2]+(x[3]?'<small>'+x[3]+'</small>':'')+'</div><button class="lv l'+v+'" data-a="lv" data-id="'+x[0]+'">'+LV[v]+'</button></div>'});h+='</div>'}
+ h+='<div class="btns" style="margin-bottom:12px"><button class="sec" data-a="ed">'+(ed?"✓ Gotowe":"✏️ Edytuj nawyki i hasła")+'</button></div>';
+ for(var i in CATS)h+=ed?cardEd(i):cardV(i,l);
+ h+=ed?quotesEd():noteCard(k);
  return h+'<div class="note">Strzałką ‹ wrócisz do wcześniejszych dni i uzupełnisz lub odznaczysz nawyki. Dotknij nawyku, aby zmienić poziom: Mini (1 pkt) → Plus (2) → Elita (3). W każdej kategorii liczy się Twój najwyższy poziom z dnia, razem maksymalnie 12 punktów.</div>';
 }
 function roz(){
@@ -144,7 +166,7 @@ function render(){
  var n=new Date(),hr=n.getHours();$("gr").textContent=hr<12?"Dzień dobry!":hr<18?"Miłego dnia!":"Dobry wieczór!";
  $("dt").textContent=n.toLocaleDateString("pl-PL",{weekday:"long",day:"numeric",month:"long"})+" · streak: "+streak();
  $("tabs").innerHTML=TABS.map(function(t){return '<button class="'+(tab===t[0]?"on":"")+'" data-a="tab" data-id="'+t[0]+'">'+t[1]+'</button>'}).join("");
- $("v").innerHTML=tab==="dzis"?dzis():tab==="roz"?roz():tab==="ryt"?ryt():post();
+ $("v").innerHTML=tab==="dzis"?dzis():tab==="roz"?roz():tab==="ryt"?ryt():tab==="pam"?pam():post();
 }
 function tick(){if(!P||!P.run)return;P.t--;if(P.t<=0){P.t=0;P.run=false;try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}render();return}var t=$("tm");if(t)t.textContent=P.t+" s"}
 function fin(){var k=key(new Date());S.ro[k]=S.ro[k]||{};S.ro[k][P.m]=1;var n=(S.ro[k].s?1:0)+(S.ro[k].t?1:0);S.l[k]=S.l[k]||{};S.l[k].w2=Math.max(S.l[k].w2||0,n>1?3:2);sv();P=null;render()}
@@ -155,13 +177,22 @@ document.addEventListener("click",function(ev){
  else if(a==="nd"){if(off>0)off--;render()}
  else if(a==="goday"){off=+id;tab="dzis";render()}
  else if(a==="lv")setLv(id);
+ else if(a==="ed"){ed=!ed;render()}
+ else if(a==="add"){H.push(["u"+Date.now(),id,"Nowy nawyk","","","",""]);sv();render()}
+ else if(a==="rm"){if(confirm("Usunąć ten nawyk? Jego dotychczasowe zaznaczenia przestaną się liczyć w punktach.")){for(var q=0;q<H.length;q++)if(H[q][0]===id){H.splice(q,1);break}sv();render()}}
+ else if(a==="up"||a==="dn"){var ix=-1;H.forEach(function(y,j){if(y[0]===id)ix=j});var st=a==="up"?-1:1,j2=ix+st;while(ix>=0&&j2>=0&&j2<H.length&&H[j2][1]!==H[ix][1])j2+=st;if(ix>=0&&j2>=0&&j2<H.length){var tmp=H[ix];H[ix]=H[j2];H[j2]=tmp;sv();render()}}
  else if(a==="go"){P={m:t.getAttribute("data-m"),i:0,t:30,run:false,v:"A"};render()}
  else if(a==="run"){P.run=!P.run;if(P.t<=0)P.t=30;render()}
  else if(a==="var"){P.v=P.v==="A"?"B":"A";render()}
  else if(a==="nx"){var L=P.m==="s"?SIT:STD;P.i++;if(P.i>=L.length){fin();return}P.t=30;render()}
  else if(a==="stop"){P=null;render()}
- else if(a==="reset"){if(confirm("Na pewno wyczyścić wszystkie postępy?")){S={l:{},ro:{},dra:{}};sv();render()}}
+ else if(a==="reset"){if(confirm("Na pewno wyczyścić wszystkie postępy i notatki? Twoje nawyki i hasła zostaną.")){S.l={};S.ro={};S.n={};sv();render()}}
 });
+document.addEventListener("input",function(ev){var t=ev.target;if(t.getAttribute("data-f")==="n"){var k=t.getAttribute("data-k");if(t.value.trim())S.n[k]=t.value;else delete S.n[k];sv()}});
+document.addEventListener("change",function(ev){var t=ev.target,f=t.getAttribute("data-f");if(!f||f==="n")return;
+ if(f==="q")S.q=t.value.split("\n").map(function(x){return x.trim()}).filter(Boolean);
+ else{var id=t.getAttribute("data-id");H.forEach(function(y){if(y[0]===id)y[+f]=t.value})}
+ sv();if(f==="1")render()});
 setInterval(tick,1000);render();
 try{if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js")}catch(e){}
 })();
